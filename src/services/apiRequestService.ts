@@ -99,20 +99,20 @@ export async function apiRequest<T = any>(
       params = { ...options.params, apikey: getValue('botsifyChatBotApiKey') };
     }
 
-    console.log('payload', payload)
-
     const axiosConfig: AxiosRequestConfig = {
       url: endpoint,
       method,
       data: payload,
       params: params,
-      ...(options.headers && { headers: options.headers }),
+      headers: {
+        Authorization: `Bearer ${getValue('accessToken')}`,
+        ...options.headers
+      }
     };
 
     logger.info(`Making API ${method!.toUpperCase()} request to ${endpoint}`);
     const response = await axiosClient.request<T>(axiosConfig);
 
-    console.log(response)
     return {
       success: true,
       data: response.data,

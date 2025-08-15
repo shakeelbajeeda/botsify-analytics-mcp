@@ -34,24 +34,31 @@ export function registerAnalyticsTools(server: McpServer) {
         },
         async (args: { dateRange: { startDate: Date; endDate: Date } }) => {
             const {dateRange} = args;
+            const normalized = {
+                startDate: new Date(dateRange.startDate).toISOString(),
+                endDate: new Date(dateRange.endDate).toISOString(),
+            };
 
             try {
                 const result = await apiRequest<any>("GET", "/v1/analytics-report/overallStats", {
                     params: {
-                        dateRange: JSON.stringify(dateRange)
+                        dateRange: JSON.stringify(normalized)
                     },
                 });
                 if (result.success) {
-                    const tableData = Object.entries(result.data).map(([field, value]) => ({
-                        field,
-                        value,
-                    }));
                     const response = {
-                        tableData,
-                        dataType: 'table',
-                        filter: 'dateRange'
+                        response: {
+                            data: [result.data],
+                            previewType: 'table',
+                            filters: ['dateRange'],
+                            filtersData: {
+                                dateRange: normalized
+                            },
+                            apiPath: '/v1/analytics-report/overallStats',
+                            apiMethod: 'GET'
+                        }
                     }
-                    return formatTextResponse(`Response: ${JSON.stringify(response)}`);
+                    return formatTextResponse(`${JSON.stringify(response)}`);
                 } else {
                     return formatTextResponse(`Failed to fetch: ${result.error}`);
                 }
@@ -84,23 +91,31 @@ export function registerAnalyticsTools(server: McpServer) {
         },
         async (args: { dateRange: { startDate: Date; endDate: Date } }) => {
             const {dateRange} = args;
+            const normalized = {
+                startDate: new Date(dateRange.startDate).toISOString(),
+                endDate: new Date(dateRange.endDate).toISOString(),
+            };
 
             try {
                 const result = await apiRequest<any>("GET", "/v1/analytics-report/usersReport", {
                     params: {
-                        dateRange: JSON.stringify(dateRange)
+                        dateRange: JSON.stringify(normalized)
                     },
                 });
                 if (result.success) {
                     const response = {
-                        chartData: {
-                            labels: result.data?.labels || [],
-                            data: result.data?.data || []
-                        },
-                        type: 'chart',
-                        filter: 'dateRange'
+                        response: {
+                            data: result.data,
+                            previewType: 'chart',
+                            filters: ['dateRange'],
+                            filtersData: {
+                                dateRange: normalized
+                            },
+                            apiPath: '/v1/analytics-report/usersReport',
+                            apiMethod: 'GET'
+                        }
                     }
-                    return formatTextResponse(`Users Report: ${JSON.stringify(response)}`);
+                    return formatTextResponse(`${JSON.stringify(response)}`);
                 } else {
                     return formatTextResponse(`Failed to fetch users report: ${result.error}`);
                 }
@@ -133,24 +148,31 @@ export function registerAnalyticsTools(server: McpServer) {
         },
         async (args: { dateRange: { startDate: Date; endDate: Date } }) => {
             const {dateRange} = args;
+            const normalized = {
+                startDate: new Date(dateRange.startDate).toISOString(),
+                endDate: new Date(dateRange.endDate).toISOString(),
+            };
 
             try {
                 const result = await apiRequest<any>("GET", "/v1/analytics-report/userPlatform", {
                     params: {
-                        dateRange: JSON.stringify(dateRange)
+                        dateRange: JSON.stringify(normalized)
                     },
                 });
                 if (result.success) {
-                    const tableData = Object.entries(result.data).map(([field, value]) => ({
-                        field,
-                        value,
-                    }));
                     const response = {
-                        tableData,
-                        dataType: 'table',
-                        filter: 'dateRange'
+                        response: {
+                            data: [result.data],
+                            previewType: 'table',
+                            filters: ['dateRange'],
+                            filtersData: {
+                                dateRange: normalized
+                            },
+                            apiPath: '/v1/analytics-report/userPlatform',
+                            apiMethod: 'GET'
+                        }
                     }
-                    return formatTextResponse(`Platform Report: ${JSON.stringify(response)}`);
+                    return formatTextResponse(`${JSON.stringify(response)}`);
                 } else {
                     return formatTextResponse(`Failed to fetch platform report: ${result.error}`);
                 }
@@ -183,15 +205,31 @@ export function registerAnalyticsTools(server: McpServer) {
         },
         async (args: { dateRange: { startDate: Date; endDate: Date } }) => {
             const {dateRange} = args;
+            const normalized = {
+                startDate: new Date(dateRange.startDate).toISOString(),
+                endDate: new Date(dateRange.endDate).toISOString(),
+            };
 
             try {
                 const result = await apiRequest<any>("GET", "/v1/analytics-report/messages", {
                     params: {
-                        dateRange: JSON.stringify(dateRange)
+                        dateRange: JSON.stringify(normalized)
                     },
                 });
                 if (result.success) {
-                    return formatTextResponse(`Top Messages Report: ${JSON.stringify(result.data)}`);
+                    const response = {
+                        response: {
+                            data: result.data,
+                            previewType: 'table',
+                            filters: ['dateRange'],
+                            filtersData: {
+                                dateRange: normalized
+                            },
+                            apiPath: '/v1/analytics-report/messages',
+                            apiMethod: 'GET'
+                        }
+                    }
+                    return formatTextResponse(`${JSON.stringify(response)}`);
                 } else {
                     return formatTextResponse(`Failed to fetch top messages report: ${result.error}`);
                 }
@@ -224,15 +262,31 @@ export function registerAnalyticsTools(server: McpServer) {
         },
         async (args: { dateRange: { startDate: Date; endDate: Date } }) => {
             const {dateRange} = args;
+            const normalized = {
+                startDate: new Date(dateRange.startDate).toISOString(),
+                endDate: new Date(dateRange.endDate).toISOString(),
+            };
 
             try {
                 const result = await apiRequest<any>("GET", "/v1/analytics-report/humanAgents", {
                     params: {
-                        dateRange: JSON.stringify(dateRange)
+                        dateRange: JSON.stringify(normalized)
                     },
                 });
                 if (result.success) {
-                    return formatTextResponse(`Human Agent Report: ${JSON.stringify(result.data)}`);
+                    const response = {
+                        response: {
+                            data: [result.data],
+                            previewType: 'table',
+                            filters: ['dateRange'],
+                            filtersData: {
+                                dateRange: normalized
+                            },
+                            apiPath: '/v1/analytics-report/messages',
+                            apiMethod: 'GET'
+                        }
+                    }
+                    return formatTextResponse(`${JSON.stringify(response)}`);
                 } else {
                     return formatTextResponse(`Failed to fetch human agent report: ${result.error}`);
                 }
