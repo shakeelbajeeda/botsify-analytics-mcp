@@ -97,7 +97,7 @@ export function registerAnalyticsTools(server: McpServer) {
             };
 
             try {
-                const result = await apiRequest<any>("GET", "/v1/analytics-report/usersReport", {
+                const result = await apiRequest<any>("GET", "/v1/analytics-report/usersList", {
                     params: {
                         dateRange: JSON.stringify(normalized)
                     },
@@ -105,13 +105,13 @@ export function registerAnalyticsTools(server: McpServer) {
                 if (result.success) {
                     const response = {
                         response: {
-                            data: result.data,
-                            previewType: 'chart',
+                            data: result.data.data,
+                            previewType: 'table',
                             filters: ['dateRange'],
                             filtersData: {
                                 dateRange: normalized
                             },
-                            apiPath: '/v1/analytics-report/usersReport',
+                            apiPath: '/v1/analytics-report/usersList',
                             apiMethod: 'GET'
                         }
                     }
